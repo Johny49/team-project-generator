@@ -5,11 +5,11 @@ describe('Employee', () => {
         it('should create an object with name, id, and email properties if provided with valid arguments', () => {
             // test data
             const name = "Sophie"
-            const id = "3492";
+            const id = 3492;
             const email = "sophie@company.com";
 
             // Create object with test properties
-            const testEmployee = Test(name, id, email);
+            const testEmployee = new Employee(name, id, email);
 
             // Assert
             expect(testEmployee.name).toEqual(name);
@@ -26,70 +26,75 @@ describe('Employee', () => {
         });
 
         it('should throw an error if name is not a non-empty string', () => {
-            const cb = () => new Employee("", "3492", "sophie@company.com");
-            const err = new Error("Expected parameter 'name' to be a non-empty string");
+            const cb = () => new Employee("", 3492, "sophie@company.com");
+            const err = new Error("Expected 'name' to be a non-empty string");
       
             expect(cb).toThrowError(err);
         });
 
-        it('should throw an error if id is not a non-empty string', () => {
-            const cb = () => new Employee("Sophie", "", "sophie@company.com");
-            const err = new Error("Expected parameter 'id' to be a non-empty string");
+        it('should throw an error if id is not a valid number', () => {
+            const cb = () => new Employee("Sophie", "string", "sophie@company.com");
+            const err = new Error("Expected 'id' to be a valid number");
       
             expect(cb).toThrowError(err);
         });
 
-        it('should throw an error if id is not a non-empty string', () => {
-            const cb = () => new Employee("Sophie", "3492", "");
-            const err = new Error("Expected parameter 'email' to be a non-empty string");
+        it('should throw an error if email is not a non-empty string', () => {
+            const cb = () => new Employee("Sophie", 3492, "");
+            const err = new Error("Expected 'email' to be a non-empty string");
       
             expect(cb).toThrowError(err);
+        });
+
+        it('should throw an error if email is not in valid format', () => {
+            const cb = () => new Employee("Sophie", 3492, "company.com")
+            
         });
     });
 
     describe('Get Name', () => {
         it('should return the name of the employee from the object', () => {
             // test data
-            const testEmployee = Employee("Sophie", 3492, "sophiescar@company.com");
+            const testEmployee = new Employee("Sophie", 3492, "sophiescar@company.com");
 
-            // return office number 
-            const name = testManager.getName();
+            // return name 
+            const name = testEmployee.getName();
 
-            // Verify that github username is returned
-            expect(name).toEqual(testManager.name);
+            // Verify that name is returned
+            expect(name).toEqual(testEmployee.name);
         });
     });
 
     describe('Get ID', () => {
         it('should return the employee ID from the object', () => {
             // test data
-            const testEmployee = Employee("Sophie", "3492", "sophiescar@company.com");
+            const testEmployee = new Employee("Sophie", 3492, "sophiescar@company.com");
 
-            // return office number 
-            const EmpId = testManager.getId();
+            // return id  
+            const EmpId = testEmployee.getId();
 
-            // Verify that github username is returned
-            expect(empId).toEqual(testManager.id);
+            // Verify that id is returned
+            expect(EmpId).toEqual(testEmployee.id);
         });
     });
 
     describe('Get Email', () => {
         it('should return the employee email from the object', () => {
             // test data
-            const testEmployee = Employee("Sophie", "3492", "sophiescar@company.com");
+            const testEmployee = new Employee("Sophie", 3492, "sophiescar@company.com");
 
-            // return office number 
-            const email = testManager.getEmail();
+            // return email
+            const email = testEmployee.getEmail();
 
-            // Verify that github username is returned
-            expect(email).toEqual(testManager.email);
+            // Verify that email is returned
+            expect(email).toEqual(testEmployee.email);
         });
     });
 
     describe('Get Role', () => {
         it('should return the designated role for objects created with this class', () => {
             //test data
-            const testEmployee = Employee("Sophie", "3492", "sophies@company.com");
+            const testEmployee = new Employee("Sophie", 3492, "sophies@company.com");
 
             // return role from the object
             const role = testEmployee.getRole();
