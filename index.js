@@ -6,8 +6,41 @@ const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 
-// array to store created team members
-const team = [];
+const generatePage = require('./src/page-template');    //?
+
+// array to store created team member data
+const teamData = [];
+
+// ** Initial Manager creation prompt **
+const promptManager = () => {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'name',
+            message: 'Hello team manager. What is your name?',
+        },
+        {
+            type: 'input',
+            name: 'id',
+            message: 'What is your id?',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'What is your email address:',
+        },
+        {
+            type: 'input',
+            name: 'officeNumber',
+            message: 'What is your office number?',
+        },
+    ])
+        .then(function (answers) {
+            const mgr = new Manager(answers.name, Number(answers.id), answers.email, answers.officeNumber);
+            teamData.push(mgr);
+            addTeamMemberCheck();
+        });
+}
 
 // ** Check to add team member or finish
 const addTeamMemberCheck = () => {
@@ -37,7 +70,7 @@ const promptIntern = () => {
             message: 'What is the intern\'s name?',
         },
         {
-            type: 'input',
+            type: 'number',
             name: 'id',
             message: 'What is the intern\'s id?',
         },
@@ -53,8 +86,8 @@ const promptIntern = () => {
         },
     ])
         .then(function (answers) {
-            answers.role = "Intern";
-            team.push(answers);
+            const intern = new Intern(answers.name, Number(answers.id), answers.email, answers.school);
+            teamData.push(intern);
             addTeamMemberCheck();
         });
 }
@@ -84,41 +117,16 @@ const promptEngineer = () => {
         },
     ])
         .then(function (answers) {
-            answers.role = "Engineer";
-            team.push(answers);
+            const eng = new Engineer(answers.name, Number(answers.id), answers.email, answers.github);
+            teamData.push(eng);
             addTeamMemberCheck();
         });
 }
 
 const buildHTML = () => {
-
+    fs.writeFileSync('./dist/index.html', generatePage(teamData));
+    console.log("Team Profile Page Created");
 }
 
-// ** Initial Manager creation prompt **
-inquirer.prompt([
-    {
-        type: 'input',
-        name: 'name',
-        message: 'Hello team manager. What is your name?',
-    },
-    {
-        type: 'input',
-        name: 'id',
-        message: 'What is your id?',
-    },
-    {
-        type: 'input',
-        name: 'email',
-        message: 'What is your email address:',
-    },
-    {
-        type: 'input',
-        name: 'officeNumber',
-        message: 'What is your office number?',
-    },
-])
-    .then(function (answers) {
-        answers.role = "Manager";
-        team.push(answers);
-        addTeamMemberCheck();
-    });
+// begin with Manager function
+promptManager();
