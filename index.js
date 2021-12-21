@@ -6,10 +6,12 @@ const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 
-const generatePage = require('./src/page-template');    //?
+const generatePage = require('./src/page-template');
 
 // array to store created team member data
 const teamData = [];
+// format for validating user email address input; adapted from https://www.w3resource.com/javascript/form/email-validation.php
+const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 // ** Initial Manager creation prompt **
 const promptManager = () => {
@@ -18,21 +20,48 @@ const promptManager = () => {
             type: 'input',
             name: 'name',
             message: 'Hello team manager. What is your name?',
+            validate: function (val) { 
+                if (typeof val !== "string" || !val.trim().length) {
+                    console.log("Name cannot be blank. Please try again.");
+                    return false;
+                } else return true;
+            },
         },
         {
             type: 'input',
             name: 'id',
             message: 'What is your id?',
+            validate: function (val) {
+                if (isNaN(val) || !val.trim().length) {
+                    console.log("Please enter a valid number.");
+                    return false;
+                } else return true;
+            },
         },
         {
             type: 'input',
             name: 'email',
             message: 'What is your email address:',
+            validate: function (val) {
+                if (val.match(emailFormat)) {
+                    return true;
+                }
+                else {
+                    console.log("This is not a valid email address. Please try again.");
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
             name: 'officeNumber',
             message: 'What is your office number?',
+            validate: function (val) { 
+                if (typeof val !== "string" || !val.trim().length) {
+                    console.error("Name cannot be blank. Please try again.");
+                    return false;
+                } else return true;
+            },
         },
     ])
         .then(function (answers) {
@@ -68,16 +97,37 @@ const promptIntern = () => {
             type: 'input',
             name: 'name',
             message: 'What is the intern\'s name?',
+            validate: function (val) { 
+                if (typeof val !== "string" || !val.trim().length) {
+                    console.log("Name cannot be blank. Please try again.");
+                    return false;
+                } else return true;
+            },
         },
         {
-            type: 'number',
+            type: 'input',
             name: 'id',
             message: 'What is the intern\'s id?',
+            validate: function (val) {
+                if (isNaN(val) || !val.trim().length) {
+                    console.log("Please enter a valid number.");
+                    return false;
+                } else return true;
+            },
         },
         {
             type: 'input',
             name: 'email',
             message: 'What is the intern\'s email address?',
+            validate: function (val) {
+                if (val.match(emailFormat)) {
+                    return true;
+                }
+                else {
+                    console.log("This is not a valid email address. Please try again.");
+                    return false;
+                }
+            }
         },
         {
             type: 'input',
@@ -99,16 +149,37 @@ const promptEngineer = () => {
             type: 'input',
             name: 'name',
             message: 'What is the engineer\'s name?',
+            validate: function (val) { 
+                if (typeof val !== "string" || !val.trim().length) {
+                    console.log("Name cannot be blank. Please try again.");
+                    return false;
+                } else return true;
+            },
         },
         {
             type: 'input',
             name: 'id',
             message: 'What is the engineer\'s id?',
+            validate: function (val) {
+                if (isNaN(val) || !val.trim().length) {
+                    console.log("Please enter a valid number.");
+                    return false;
+                } else return true;
+            },
         },
         {
             type: 'input',
             name: 'email',
             message: 'What is the engineer\'s email address?',
+            validate: function (val) {
+                if (val.match(emailFormat)) {
+                    return true;
+                }
+                else {
+                    console.log("This is not a valid email address. Please try again.");
+                    return false;
+                }
+            }
         },
         {
             type: 'inpput',
@@ -125,7 +196,7 @@ const promptEngineer = () => {
 
 const buildHTML = () => {
     fs.writeFileSync('./dist/index.html', generatePage(teamData));
-    console.log("Team Profile Page Created");
+    console.log('\x1b[32m%s\x1b[0m', "Team Profile Page Created");
 }
 
 // begin with Manager function
