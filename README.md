@@ -2,7 +2,7 @@
 
 ## Table of Contents
 * [Description](#description)
-* [Screenshot](#screenshot)
+* [Screenshots](#screenshot)
 * [Installation](#installation)
 * [Usage](#usage)
 * [Link](#link)
@@ -15,17 +15,15 @@
 ## Description 
 This a Node.js command-line application that allows a manager to enter team member data to create a formatted HTML webpage. It also contains tests for each of the classes used in the application.
 
-## Screenshot
-![Screenshot of portfolio webpage](./assets/readme-screenshot.png)
+## Screenshots
+![Screenshot of finished webpage](./assets/readme-screenshot.png)
+![Screenshot of command line interface](./assets/readme-screenshot2.png)
+
 
 ## Installation
-Initialize npm:
+Install npm dependencies:
 ```bash
-npm init -y
-```
-Install Inquirer:
-```bash
-npm -i inquirer
+npm install
 ```
 
 ## Usage
@@ -35,11 +33,11 @@ node index.js
 ```
 
 ## Link
-[Video Walkthrough](https://johny49.github.io/weather-dashboard/)
+[Video Walkthrough](https://drive.google.com/drive/folders/1CaQdwbri9IfzgB0sODRviMSXnWazbVtD?usp=sharing)
 
 
 ## Code
-[GitHub Code Repository](https://github.com/Johny49/ez-readme)
+[GitHub Code Repository](https://github.com/Johny49/team-project-generator)
 
 
 ## Contact 
@@ -47,9 +45,18 @@ Created by [@johny49](https://github.com/Johny49/) - feel free to contact me!
 
 
 ## Technologies
+- HTML
+- Bootstrap
 - JavaScript
 - Node
 - Inquirer.js
+- Jest
+
+## Tests
+Tests have been created for the Employee, Manager, Engineer, and Intern Classes.  To run the tests, install npm dependencies, then run the following command:
+```bash
+npm test
+```
 
 ## Project Status
 Project is: completed and functioning as intended.
